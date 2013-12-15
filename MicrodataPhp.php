@@ -27,11 +27,12 @@ class MicrodataPhp {
    *   The url of the page to be parsed.
    */
   public function __construct($url) {
-    $dom = new MicrodataPhpDOMDocument($url);
+    $dom = new MicrodataPhpDOMDocument('1.0', 'UTF-8');
     $dom->registerNodeClass('DOMDocument', 'MicrodataPhpDOMDocument');
     $dom->registerNodeClass('DOMElement', 'MicrodataPhpDOMElement');
     $dom->preserveWhiteSpace = false;
-    @$dom->loadHTMLFile($url);
+    $data = '<?xml version="1.0" encoding="UTF-8"?>' . file_get_contents($url);
+    @$dom->loadHTML($data);
 
     $this->dom = $dom;
   }
